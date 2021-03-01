@@ -1,6 +1,8 @@
 import React, {lazy, Suspense} from 'react'
 import './App.css';
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Loading from "./components/shared/loading/loading";
+import * as ROUTES from './constants/routes'
 
 const Dashboard = lazy(() => import('./pages/dashboard'));
 const Login = lazy(() => import('./pages/login'));
@@ -10,9 +12,17 @@ const NotFound = lazy(() => import('./pages/not-found'));
 
 function App() {
   return (
-      <Suspense fallback={<Loading height={50} width={50}/>}>
-        <p>Content</p>
-    </Suspense>
+      <Router>
+          <Suspense fallback={<Loading height={50} width={50}/>}>
+            <Switch>
+                <Route path={ROUTES.LOGIN} component={Login}/>
+                <Route path={ROUTES.SIGN_UP} component={SignUp}/>
+                <Route path={ROUTES.PROFILE} component={Profile}/>
+                <Route path={ROUTES.DASHBOARD} component={Dashboard} exact/>
+                <Route path={ROUTES.NOTFOUND} component={NotFound}/>
+            </Switch>
+          </Suspense>
+      </Router>
   );
 }
 
